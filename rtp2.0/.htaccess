@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^rtp/([^/]+)/([^/]+)/([^/]+)/?$ rtp/index.php/$1/$2/$3 [QSA,L]
