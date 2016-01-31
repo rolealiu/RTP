@@ -7,7 +7,7 @@
  * @version 2.0 beta2
  * @updateDate 20151211
  */
-
+asd
 //是否初次部署，设定为TRUE将在所有用户自行创建的用户目录下新建空白的index.html文件防止部分服务器开启的目录查看功能，上线前设为false提高性能
 define('FIRST_DEPLOYMENT', FALSE);
 
