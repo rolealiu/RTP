@@ -65,7 +65,8 @@ class DatabaseModule
 		catch(PDOException $error)
 		{
 			//输出错误信息
-			E($error -> getMessage());
+			print_r($error -> getTrace());
+			exit ;
 		}
 	}
 
