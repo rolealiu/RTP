@@ -28,13 +28,11 @@ class UserModule
 		//为当前方法添加观察者
 		$this -> addObserver(__METHOD__, $ob1);
 		$this -> addObserver(__METHOD__, $ob2);
-		$this -> delObserver(__METHOD__, $ob2);
-
-		//用于快速调用下一个层的方法，调用后会执行Dao层的同名方法
-		N('d');
 
 		//通知观察者，并且传递参数
 		$this -> notifyObserver('login', 'UserModule\'s login function work!');
+		
+		echo 1;
 	}
 
 }

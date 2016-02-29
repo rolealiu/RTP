@@ -16,16 +16,10 @@ class UserDao
 
 	public function update()
 	{
-
 	}
 
 	public function login()
 	{
-		/**
-		 * 与登陆有关的操作
-		 */
-		$db = D();
-		O($db -> query('select * from user where _id =1'));
 	}
 
 }

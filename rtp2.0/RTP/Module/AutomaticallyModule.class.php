@@ -118,7 +118,7 @@ Class AutomaticallyModule
 	public static function autoloadUserController($className)
 	{
 		$path = realpath(PATH_APP . DIRECTORY_SEPARATOR . self::$groupName . DIRECTORY_SEPARATOR . DIR_CONTROLLER . DIRECTORY_SEPARATOR . self::$controllerName . DIR_CONTROLLER . '.class.php');
-		R($path);
+		quickRequire($path);
 		//当控制器完成路由之后，取消自动载入控制器的路由，加快模块的加载速度
 		spl_autoload_unregister('self::autoloadUserController');
 	}
