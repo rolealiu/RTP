@@ -2,7 +2,7 @@
 /**
  * 自动化模块,用于路由分发请求,自动加载类,自动实例化对象,自动执行方法等
  * @author rolealiu/刘昊臻,www.rolealiu.com
- * @updateDate 20151211
+ * @updateDate 20160227
  */
 
 namespace RTP\Module;
@@ -16,12 +16,6 @@ Class AutomaticallyModule
 	private static $operationName;
 	private static $daoName;
 	private static $modelName;
-
-	//cut points
-	private static $aopTarget = array(
-		'UserController' => 'UserAspect:checkLogin',
-		'UserController:login' => 'UserAspect:test'
-	);
 
 	public static function start()
 	{
@@ -37,7 +31,7 @@ Class AutomaticallyModule
 		//判断是否有PATH_INFO信息，如果没有则无需路由
 		if (!isset($_SERVER['PATH_INFO']))
 		{
-			return;
+			exit;
 		}
 
 		//将PATH_INFO分割获取参数值
@@ -135,7 +129,7 @@ Class AutomaticallyModule
 	public static function autoloadUserObserver($className)
 	{
 		$path = realpath(PATH_APP . DIRECTORY_SEPARATOR . self::$groupName . DIRECTORY_SEPARATOR . DIR_OBSERVER . DIRECTORY_SEPARATOR . $className . '.class.php');
-		R($path);
+		quickRequire($path);
 	}
 
 	/**
@@ -144,7 +138,7 @@ Class AutomaticallyModule
 	public static function autoloadUserModule($className)
 	{
 		$path = realpath(PATH_APP . DIRECTORY_SEPARATOR . self::$groupName . DIRECTORY_SEPARATOR . DIR_MODULE . DIRECTORY_SEPARATOR . $className . '.class.php');
-		R($path);
+		quickRequire($path);
 	}
 
 	/**
@@ -153,7 +147,7 @@ Class AutomaticallyModule
 	public static function autoloadUserDao($className)
 	{
 		$path = realpath(PATH_APP . DIRECTORY_SEPARATOR . self::$groupName . DIRECTORY_SEPARATOR . DIR_DAO . DIRECTORY_SEPARATOR . $className . '.class.php');
-		R($path);
+		quickRequire($path);
 	}
 
 	/**
@@ -162,7 +156,7 @@ Class AutomaticallyModule
 	public static function autoloadUserModel($className)
 	{
 		$path = realpath(PATH_APP . DIRECTORY_SEPARATOR . self::$groupName . DIRECTORY_SEPARATOR . DIR_MODEL . DIRECTORY_SEPARATOR . $className . '.class.php');
-		R($path);
+		quickRequire($path);
 	}
 
 	/**
@@ -171,7 +165,7 @@ Class AutomaticallyModule
 	public static function autoloadRTPModule($className)
 	{
 		$path = realpath(PATH_FW . PATH_MODULE) . DIRECTORY_SEPARATOR . str_replace('RTP\Module\\', '', $className) . '.class.php';
-		R($path);
+		quickRequire($path);
 	}
 
 	/**
@@ -180,54 +174,7 @@ Class AutomaticallyModule
 	public static function autoloadRTPTraits($className)
 	{
 		$path = realpath(PATH_FW . PATH_TRAITS) . DIRECTORY_SEPARATOR . str_replace('RTP\Traits\\', '', $className) . '.traits.php';
-		//		echo '</br>'.$path;
-		R($path);
-	}
-
-	/**
-	 * 快速执行方法，用于Controller=>Module=>Dao三层之间的快速执行同名方法
-	 */
-	public static function nextTo()
-	{
-		$args = func_get_args();
-		$args = &$args[0];
-		$argsNum = count($args);
-		$className = self::$moduleName . $args[0];
-		$class = new \ReflectionClass($className);
-		if ($class -> hasMethod(self::$operationName))
-		{
-			$method = $class -> getMethod(self::$operationName);
-			if ($method -> isPublic())
-			{
-				if ($argsNum == 1)
-				{
-					if ($method -> isStatic())
-					{
-						return $method -> invoke(NULL);
-					}
-					else
-					{
-						return $method -> invoke($class -> newInstance());
-					}
-				}
-				else
-				{
-					unset($args[0]);
-					if ($method -> isStatic())
-					{
-						$method -> invokeArgs(NULL, $args);
-					}
-					else
-					{
-						$method -> invokeArgs($class -> newInstance(), $args);
-					}
-				}
-			}
-			else
-			{
-				E('illegal operation name ' . self::$operationName . ' in function N()', $className);
-			}
-		}
+		quickRequire($path);
 	}
 
 }

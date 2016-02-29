@@ -2,7 +2,7 @@
 /**
  * 全局输出缓存模块，用于储存输出缓存的内容,请勿用于其他数据的储存，防止数据混乱
  * @author rolealiu/刘昊臻,www.rolealiu.com
- * @updateDate 20151229
+ * @updateDate 20160227
  */
 
 namespace RTP\Module;
@@ -11,8 +11,14 @@ Class OutputStorageModule
 {
 	use \RTP\Traits\Singleton;
 
+	/**
+	 * 注册表变量
+	 */
 	private static $registry = NULL;
 
+	/**
+	 * 构造函数
+	 */
 	protected function __construct()
 	{
 		if (is_null(self::$registry))
