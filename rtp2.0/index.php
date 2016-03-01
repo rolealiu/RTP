@@ -30,7 +30,7 @@ define('DB_PASSWORD', 'root');
 define('DB_TYPE', 'mysql');
 
 //数据库名
-define('DB_NAME', 'rpt');
+define('DB_NAME', 'rtp');
 
 //数据库是否需要保持长期连接（长连接）,多线程高并发环境下请开启,默认关闭
 define('DB_PERSISTENT_CONNECTION', FALSE);

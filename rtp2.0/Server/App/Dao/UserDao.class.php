@@ -6,12 +6,10 @@ class UserDao
 
 	protected function before()
 	{
-		echo "我在Dao层初始化时先执行</br>";
 	}
 
 	protected function after()
 	{
-		echo "</br>我在Dao层销毁前先执行";
 	}
 
 	public function update()

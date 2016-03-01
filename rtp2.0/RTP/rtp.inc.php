@@ -3,7 +3,7 @@
  * 框架起始文件，入口文件引入此文件来启用框架
  * @author rolealiu/刘昊臻,www.rolealiu.com
  * @version 2.0 beta3
- * @updateDate 20160117
+ * @updateDate 20160301
  */
 
 namespace RTP;
@@ -73,16 +73,29 @@ defined('PATH_APP') or define('PATH_APP', './');
 date_default_timezone_set('Asia/Shanghai');
 
 //判断DEBUG模式操作
-DEBUG ? error_reporting(E_ALL^E_NOTICE) : error_reporting(0);
+DEBUG ? error_reporting(E_ALL ^ E_NOTICE) : error_reporting(0);
 
 //引入必要文件文件
 require PATH_FW . PATH_COMMON . 'EasyFunction.php';
 require PATH_FW . PATH_MODULE . 'AutomaticallyModule.class.php';
 
 //启动自动化模块
-Module\AutomaticallyModule::start();
+try
+{
+	Module\AutomaticallyModule::start();
 
-//如果是首次部署项目，则在所有的项目下面新建空白的安全文件
-if (FIRST_DEPLOYMENT)
-	Module\FileModule::createSecurityIndex();
+	//如果是首次部署项目，则在所有的项目下面新建空白的安全文件
+	if (FIRST_DEPLOYMENT)
+		Module\FileModule::createSecurityIndex();
+}
+catch(Module\ExceptionModule $e)
+{
+	$e -> printError();
+}
+catch(\Exception $e)
+{
+	if (DEBUG)
+		print_r($e -> getMessage());
+	exit ;
+}
 ?>

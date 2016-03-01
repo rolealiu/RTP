@@ -10,7 +10,7 @@ use RTP\Module as M;
 $filePaths = NULL;
 
 /**
- * 快捷Dao操作函数:dao
+ * 快捷数据库操作函数
  */
 function getDatabase($isNewInstance = false)
 {
@@ -52,7 +52,7 @@ function getInput()
 				{
 					foreach ($_GET as $key => $value)
 					{
-						$input[$key] = cleanFormate($value);
+						$input[$key] = cleanFormat($value);
 					}
 					break;
 				}
@@ -61,7 +61,7 @@ function getInput()
 				{
 					foreach ($_POST as $key => $value)
 					{
-						$input[$key] = cleanFormate($value);
+						$input[$key] = cleanFormat($value);
 					}
 					break;
 				}
@@ -71,7 +71,7 @@ function getInput()
 			{
 				foreach ($_POST as $key => $value)
 				{
-					$input[$key] = cleanFormate($value);
+					$input[$key] = cleanFormat($value);
 				}
 				break;
 			}
@@ -79,7 +79,7 @@ function getInput()
 			{
 				foreach ($_GET as $key => $value)
 				{
-					$input[$key] = cleanFormate($value);
+					$input[$key] = cleanFormat($value);
 				}
 				break;
 			}
@@ -100,21 +100,21 @@ function getInput()
 			{
 				if (!empty($_GET))
 				{
-					return cleanFormate($_GET[$paramName]);
+					return cleanFormat($_GET[$paramName]);
 				}
 				else
 				if (!empty($_POST))
 				{
-					return cleanFormate($_POST[$paramName]);
+					return cleanFormat($_POST[$paramName]);
 				}
 			}
 			case 'post' :
 			{
-				return cleanFormate($_POST[$paramName]);
+				return cleanFormat($_POST[$paramName]);
 			}
 			case 'get' :
 			{
-				return cleanFormate($_GET[$paramName]);
+				return cleanFormat($_GET[$paramName]);
 			}
 			default :
 				return null;
@@ -131,7 +131,7 @@ function getInput()
 				{
 					foreach ($args as &$paramName)
 					{
-						$input[$paramName] = cleanFormate($_GET[$paramName]);
+						$input[$paramName] = cleanFormat($_GET[$paramName]);
 					}
 				}
 				else
@@ -139,7 +139,7 @@ function getInput()
 				{
 					foreach ($args as &$paramName)
 					{
-						$input[$paramName] = cleanFormate($_POST[$paramName]);
+						$input[$paramName] = cleanFormat($_POST[$paramName]);
 					}
 				}
 				break;
@@ -148,7 +148,7 @@ function getInput()
 			{
 				foreach ($args as &$paramName)
 				{
-					$input[$paramName] = cleanFormate($_POST[$paramName]);
+					$input[$paramName] = cleanFormat($_POST[$paramName]);
 				}
 				break;
 			}
@@ -156,7 +156,7 @@ function getInput()
 			{
 				foreach ($args as &$paramName)
 				{
-					$input[$paramName] = cleanFormate($_GET[$paramName]);
+					$input[$paramName] = cleanFormat($_GET[$paramName]);
 				}
 				break;
 			}
@@ -195,7 +195,7 @@ function quickRequire($filePath)
 	global $filePaths;
 	if (is_null($filePaths))
 		$filePaths = array();
-	
+
 	if (!isset($filePaths[$filePath]))
 	{
 		if (is_file($filePath))
@@ -231,8 +231,19 @@ function quickSession($key, &$value)
 /**
  * 格式清除函数
  */
-function cleanFormate(&$value)
+function cleanFormat(&$value)
 {
 	return htmlspecialchars(stripcslashes(trim($value)));
+}
+
+/**
+ * 换行输出数组信息
+ */
+function printFormatted(array $info)
+{
+	foreach ($info as $key => $value)
+	{
+		echo "$key:$value</br>";
+	};
 }
 ?>

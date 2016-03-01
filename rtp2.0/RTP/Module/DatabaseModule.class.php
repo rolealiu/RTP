@@ -2,7 +2,7 @@
 /**
  * 数据库模块，用于数据库创建以及一系列数据库操作
  * @author rolealiu/刘昊臻,www.rolealiu.com
- * @updateTime 20151208
+ * @updateTime 20160301
  */
 
 namespace RTP\Module;
@@ -61,11 +61,12 @@ class DatabaseModule
 		try
 		{
 			self::$db_con = new \PDO($conInfo, DB_USER, DB_PASSWORD, $option);
+			
 		}
-		catch(PDOException $error)
+		catch(\PDOException $e)
 		{
 			//输出错误信息
-			print_r($error -> getTrace());
+			print_r($e -> getMessage());
 			exit ;
 		}
 	}
@@ -219,7 +220,7 @@ class DatabaseModule
 		if (DEBUG)
 		{
 			if (self::$db_con -> errorInfo()[0] != 00000)
-				E(json_encode(self::$db_con -> errorInfo()));
+				throw new ExceptionModule("database error in:{self::$db_con -> errorInfo()}", 12000);
 		}
 	}
 

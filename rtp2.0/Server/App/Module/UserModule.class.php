@@ -6,12 +6,10 @@ class UserModule
 
 	protected function before()
 	{
-		echo "我在Module层初始化时先执行</br>";
 	}
 
 	protected function after()
 	{
-		echo "</br>我在Module层销毁前先执行";
 	}
 
 	public function update()
@@ -21,18 +19,18 @@ class UserModule
 
 	public function login()
 	{
-		//新建两个观察者
-		$ob1 = new identityObserver;
-		$ob2 = new logObserver;
+		//		//新建两个观察者
+		//		$ob1 = new identityObserver;
+		//		$ob2 = new logObserver;
+		//
+		//		//为当前方法添加观察者
+		//		$this -> addObserver(__METHOD__, $ob1);
+		//		$this -> addObserver(__METHOD__, $ob2);
+		//
+		//		//通知观察者，并且传递参数
+		//		$this -> notifyObserver('login', 'UserModule\'s login function work!');
 
-		//为当前方法添加观察者
-		$this -> addObserver(__METHOD__, $ob1);
-		$this -> addObserver(__METHOD__, $ob2);
-
-		//通知观察者，并且传递参数
-		$this -> notifyObserver('login', 'UserModule\'s login function work!');
-		
-		echo 1;
+		$dao = getDatabase();
 	}
 
 }

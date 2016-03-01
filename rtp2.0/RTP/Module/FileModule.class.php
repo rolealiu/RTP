@@ -25,7 +25,7 @@ class FileModule
 				'..'
 			);
 			self::getAllDirs($path, $dirs, $ban_dirs);
-			
+
 			foreach ($dirs as $dir)
 			{
 				if (file_exists($dir . '/index.html') || file_exists($dir . '/index.php'))

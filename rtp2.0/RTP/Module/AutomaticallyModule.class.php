@@ -2,12 +2,12 @@
 /**
  * 自动化模块,用于路由分发请求,自动加载类,自动实例化对象,自动执行方法等
  * @author rolealiu/刘昊臻,www.rolealiu.com
- * @updateDate 20160227
+ * @updateDate 20160301
  */
 
 namespace RTP\Module;
 
-Class AutomaticallyModule
+class AutomaticallyModule
 {
 	private static $path;
 	private static $groupName;
@@ -26,13 +26,10 @@ Class AutomaticallyModule
 		spl_autoload_register('self::autoloadUserDao');
 		spl_autoload_register('self::autoloadRTPTraits');
 		spl_autoload_register('self::autoloadRTPModule');
-		spl_autoload_register('self::autoloadUserModel');
 
 		//判断是否有PATH_INFO信息，如果没有则无需路由
 		if (!isset($_SERVER['PATH_INFO']))
-		{
-			exit;
-		}
+			throw new ExceptionModule('url is lack of pathinfo', 11001);
 
 		//将PATH_INFO分割获取参数值
 		self::$path = explode('/', substr($_SERVER['PATH_INFO'], 1));
@@ -45,20 +42,15 @@ Class AutomaticallyModule
 		//操作名
 		self::$operationName = &self::$path[2];
 
+		//检查pathinfo完整性
 		if (!isset(self::$groupName))
-		{
-			E('undefined group param');
-		}
+			throw new ExceptionModule('error in lack of groupName', 11002);
 		else
 		if (!isset(self::$controllerName))
-		{
-			E('undefined module param');
-		}
+			throw new ExceptionModule('error in lack of controllerName', 11003);
 		else
 		if (!isset(self::$operationName))
-		{
-			E('undefined operation param');
-		}
+			throw new ExceptionModule('error in lack of operationName', 11004);
 
 		//实例化控制器对象
 		$class = new \ReflectionClass(self::$controllerName . DIR_CONTROLLER);
@@ -101,14 +93,14 @@ Class AutomaticallyModule
 			}
 			else
 			{
-				//非法操作
-				E('illegal operation');
+				//操作无法访问
+				throw new ExceptionModule('operation isn\'t a public function', 11005);
 			}
 		}
 		else
 		{
-			//操作未定义
-			E('undefined operation');
+				//操作无法访问
+				throw new ExceptionModule('undefined operation or illegal operation name', 11006);
 		}
 	}
 
@@ -147,15 +139,6 @@ Class AutomaticallyModule
 	public static function autoloadUserDao($className)
 	{
 		$path = realpath(PATH_APP . DIRECTORY_SEPARATOR . self::$groupName . DIRECTORY_SEPARATOR . DIR_DAO . DIRECTORY_SEPARATOR . $className . '.class.php');
-		quickRequire($path);
-	}
-
-	/**
-	 * 自动载入用户自定义模型
-	 */
-	public static function autoloadUserModel($className)
-	{
-		$path = realpath(PATH_APP . DIRECTORY_SEPARATOR . self::$groupName . DIRECTORY_SEPARATOR . DIR_MODEL . DIRECTORY_SEPARATOR . $className . '.class.php');
 		quickRequire($path);
 	}
 
