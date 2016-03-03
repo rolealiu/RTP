@@ -48,6 +48,12 @@ defined('PATH_COMMON') or define('PATH_COMMON', '/Common/');
 //框架特性(Traits)目录名称
 defined('PATH_TRAITS') or define('PATH_TRAITS', '/Traits/');
 
+//框架异常(Exception)目录名称
+defined('PATH_EXCEPTION') or define('PATH_EXCEPTION', '/Module/Exception/');
+
+//框架接口(Interface)目录名称
+defined('PATH_IMPLEMENT') or define('PATH_IMPLEMENT', '/Inplement/');
+
 //用户控制器目录名称
 defined('DIR_CONTROLLER') or define('DIR_CONTROLLER', 'Controller');
 

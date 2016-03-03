@@ -25,11 +25,13 @@ class AutomaticallyModule
 		spl_autoload_register('self::autoloadUserModule');
 		spl_autoload_register('self::autoloadUserDao');
 		spl_autoload_register('self::autoloadRTPTraits');
+		spl_autoload_register('self::autoloadRTPImplement');
 		spl_autoload_register('self::autoloadRTPModule');
+		spl_autoload_register('self::autoloadRTPException');
 
 		//判断是否有PATH_INFO信息，如果没有则无需路由
 		if (!isset($_SERVER['PATH_INFO']))
-			throw new ExceptionModule('url is lack of pathinfo', 11001);
+			throw new ExceptionModule(13001, 'url is lack of pathinfo');
 
 		//将PATH_INFO分割获取参数值
 		self::$path = explode('/', substr($_SERVER['PATH_INFO'], 1));
@@ -99,8 +101,8 @@ class AutomaticallyModule
 		}
 		else
 		{
-				//操作无法访问
-				throw new ExceptionModule('undefined operation or illegal operation name', 11006);
+			//操作无法访问
+			throw new ExceptionModule('undefined operation or illegal operation name', 11006);
 		}
 	}
 
@@ -157,6 +159,25 @@ class AutomaticallyModule
 	public static function autoloadRTPTraits($className)
 	{
 		$path = realpath(PATH_FW . PATH_TRAITS) . DIRECTORY_SEPARATOR . str_replace('RTP\Traits\\', '', $className) . '.traits.php';
+		quickRequire($path);
+	}
+
+	/**
+	 * 自动载入框架异常类
+	 */
+	public static function autoloadRTPException($className)
+	{
+		$path = realpath(PATH_FW . PATH_EXCEPTION) . DIRECTORY_SEPARATOR . str_replace('RTP\Module\RTPException\\', '', $className) . '.class.php';
+
+		quickRequire($path);
+	}
+
+	/**
+	 * 自动载入框架接口
+	 */
+	public static function autoloadRTPImplement($className)
+	{
+		$path = realpath(PATH_FW . PATH_IMPLEMENT) . DIRECTORY_SEPARATOR . str_replace('RTP\Implement\\', '', $className) . '.imple.php';
 		quickRequire($path);
 	}
 
