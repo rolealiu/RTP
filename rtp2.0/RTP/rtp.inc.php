@@ -37,7 +37,7 @@ defined('DB_PASSWORD') or define('DB_PASSWORD', 'root');
 defined('DB_NAME') or define('DB_NAME', 'rpt');
 
 //数据库是否需要保持长期连接（长连接）,多线程高并发环境下请开启,默认关闭
-defined('DB_PERSISTENT_CONNECTION') or define('DB_PERSISTENT_CONNECTION', TRUE);
+defined('DB_PERSISTENT_CONNECTION') or define('DB_PERSISTENT_CONNECTION', FALSE);
 
 //框架模块目录名称
 defined('PATH_MODULE') or define('PATH_MODULE', '/Module/');
@@ -82,10 +82,24 @@ DEBUG ? error_reporting(E_ALL ^ E_NOTICE) : error_reporting(0);
 require PATH_FW . PATH_COMMON . 'EasyFunction.php';
 require PATH_FW . PATH_MODULE . 'AutomaticallyModule.class.php';
 
-//启动自动化模块
-Module\AutomaticallyModule::start();
-
-//如果是首次部署项目，则在所有的项目下面新建空白的安全文件
-if (FIRST_DEPLOYMENT)
-	Module\FileModule::createSecurityIndex();
+//捕获全局信息
+try
+{
+	//启动自动化模块
+	Module\AutomaticallyModule::start();
+	
+	//如果是首次部署项目，则在所有的项目下面新建空白的安全文件
+	if (FIRST_DEPLOYMENT)
+		Module\FileModule::createSecurityIndex();
+}
+catch(Module\ExceptionModule $e)
+{
+	//传参为True时，遇到异常后即停止程序运行
+	$e -> printError(FALSE);
+}
+catch(\Exception $e)
+{
+	echo $e -> getMessage();
+	exit ;
+}
 ?>

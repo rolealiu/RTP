@@ -61,7 +61,7 @@ class DatabaseModule
 		try
 		{
 			self::$db_con = new \PDO($conInfo, DB_USER, DB_PASSWORD, $option);
-			
+
 		}
 		catch(\PDOException $e)
 		{
@@ -220,7 +220,7 @@ class DatabaseModule
 		if (DEBUG)
 		{
 			if (self::$db_con -> errorInfo()[0] != 00000)
-				throw new ExceptionModule("database error in:{self::$db_con -> errorInfo()}", 12000);
+				throw new ExceptionModule(12000, "database error in:{self::$db_con -> errorInfo()}");
 		}
 	}
 

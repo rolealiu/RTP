@@ -31,7 +31,6 @@ class UserModule
 		//		$this -> notifyObserver('login', 'UserModule\'s login function work!');
 
 		//		$dao = getDatabase();
-		echo 'user logical';
 	}
 
 }

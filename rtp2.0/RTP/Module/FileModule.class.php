@@ -14,28 +14,26 @@ class FileModule
 	 */
 	public static function createSecurityIndex()
 	{
-		if (FIRST_DEPLOYMENT)
-		{
-			$path = PATH_APP;
-			$dirs = array();
-			$ban_dirs = array(
-				'./',
-				'.',
-				'../',
-				'..'
-			);
-			self::getAllDirs($path, $dirs, $ban_dirs);
+		$path = PATH_APP;
+		$dirs = array();
+		$ban_dirs = array(
+			'./',
+			'.',
+			'../',
+			'..'
+		);
+		self::getAllDirs($path, $dirs, $ban_dirs);
 
-			foreach ($dirs as $dir)
+		foreach ($dirs as $dir)
+		{
+			echo $dir.'</br>';
+			if (file_exists($dir . '/index.html') || file_exists($dir . '/index.php'))
+				continue;
+			else
 			{
-				if (file_exists($dir . '/index.html') || file_exists($dir . '/index.php'))
-					continue;
-				else
-				{
-					$file = fopen($dir . '/index.html', 'w');
-					fwrite($file, 'security file for rtp');
-					fclose($file);
-				}
+				$file = fopen($dir . '/index.html', 'w');
+				fwrite($file, '');
+				fclose($file);
 			}
 		}
 	}

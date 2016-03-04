@@ -26,12 +26,10 @@ class AutomaticallyModule
 		spl_autoload_register('self::autoloadUserDao');
 		spl_autoload_register('self::autoloadRTPTraits');
 		spl_autoload_register('self::autoloadRTPModule');
-		spl_autoload_register('self::autoloadRTPException');
 
 		//判断是否有PATH_INFO信息，如果没有则无需路由
 		if (!isset($_SERVER['PATH_INFO']))
-			//			throw new ExceptionModule(13001, 'url is lack of pathinfo');
-			;
+			throw new ExceptionModule(11001, 'url in lack of pathinfo');
 
 		//将PATH_INFO分割获取参数值
 		self::$path = explode('/', substr($_SERVER['PATH_INFO'], 1));
@@ -46,16 +44,13 @@ class AutomaticallyModule
 
 		//检查pathinfo完整性
 		if (!isset(self::$groupName))
-			//			throw new ExceptionModule(11002, 'error in lack of groupName');
-			;
+			throw new ExceptionModule(11002, 'error in lack of groupName');
 		else
 		if (!isset(self::$controllerName))
-			//			throw new ExceptionModule(11003, 'error in lack of controllerName');
-			;
+			throw new ExceptionModule(11003, 'error in lack of controllerName');
 		else
 		if (!isset(self::$operationName))
-			//			throw new ExceptionModule(11004, 'error in lack of operationName');
-			;
+			throw new ExceptionModule(11004, 'error in lack of operationName');
 		//实例化控制器对象
 		$class = new \ReflectionClass(self::$controllerName . DIR_CONTROLLER);
 
@@ -98,13 +93,13 @@ class AutomaticallyModule
 			else
 			{
 				//操作无法访问
-				throw new ExceptionModule('operation isn\'t a public function', 11005);
+				throw new ExceptionModule(11005, 'operation isn\'t a public function');
 			}
 		}
 		else
 		{
 			//操作无法访问
-			throw new ExceptionModule('undefined operation or illegal operation name', 11006);
+			throw new ExceptionModule(11006, 'undefined operation or illegal operation name');
 		}
 	}
 
