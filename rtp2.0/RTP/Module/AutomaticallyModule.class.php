@@ -25,13 +25,13 @@ class AutomaticallyModule
 		spl_autoload_register('self::autoloadUserModule');
 		spl_autoload_register('self::autoloadUserDao');
 		spl_autoload_register('self::autoloadRTPTraits');
-		spl_autoload_register('self::autoloadRTPImplement');
 		spl_autoload_register('self::autoloadRTPModule');
 		spl_autoload_register('self::autoloadRTPException');
 
 		//判断是否有PATH_INFO信息，如果没有则无需路由
 		if (!isset($_SERVER['PATH_INFO']))
-			throw new ExceptionModule(13001, 'url is lack of pathinfo');
+			//			throw new ExceptionModule(13001, 'url is lack of pathinfo');
+			;
 
 		//将PATH_INFO分割获取参数值
 		self::$path = explode('/', substr($_SERVER['PATH_INFO'], 1));
@@ -46,14 +46,16 @@ class AutomaticallyModule
 
 		//检查pathinfo完整性
 		if (!isset(self::$groupName))
-			throw new ExceptionModule('error in lack of groupName', 11002);
+			//			throw new ExceptionModule(11002, 'error in lack of groupName');
+			;
 		else
 		if (!isset(self::$controllerName))
-			throw new ExceptionModule('error in lack of controllerName', 11003);
+			//			throw new ExceptionModule(11003, 'error in lack of controllerName');
+			;
 		else
 		if (!isset(self::$operationName))
-			throw new ExceptionModule('error in lack of operationName', 11004);
-
+			//			throw new ExceptionModule(11004, 'error in lack of operationName');
+			;
 		//实例化控制器对象
 		$class = new \ReflectionClass(self::$controllerName . DIR_CONTROLLER);
 
@@ -159,25 +161,6 @@ class AutomaticallyModule
 	public static function autoloadRTPTraits($className)
 	{
 		$path = realpath(PATH_FW . PATH_TRAITS) . DIRECTORY_SEPARATOR . str_replace('RTP\Traits\\', '', $className) . '.traits.php';
-		quickRequire($path);
-	}
-
-	/**
-	 * 自动载入框架异常类
-	 */
-	public static function autoloadRTPException($className)
-	{
-		$path = realpath(PATH_FW . PATH_EXCEPTION) . DIRECTORY_SEPARATOR . str_replace('RTP\Module\RTPException\\', '', $className) . '.class.php';
-
-		quickRequire($path);
-	}
-
-	/**
-	 * 自动载入框架接口
-	 */
-	public static function autoloadRTPImplement($className)
-	{
-		$path = realpath(PATH_FW . PATH_IMPLEMENT) . DIRECTORY_SEPARATOR . str_replace('RTP\Implement\\', '', $className) . '.imple.php';
 		quickRequire($path);
 	}
 

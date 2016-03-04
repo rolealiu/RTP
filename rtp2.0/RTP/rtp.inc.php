@@ -51,9 +51,6 @@ defined('PATH_TRAITS') or define('PATH_TRAITS', '/Traits/');
 //框架异常(Exception)目录名称
 defined('PATH_EXCEPTION') or define('PATH_EXCEPTION', '/Module/Exception/');
 
-//框架接口(Interface)目录名称
-defined('PATH_IMPLEMENT') or define('PATH_IMPLEMENT', '/Inplement/');
-
 //用户控制器目录名称
 defined('DIR_CONTROLLER') or define('DIR_CONTROLLER', 'Controller');
 
@@ -86,22 +83,9 @@ require PATH_FW . PATH_COMMON . 'EasyFunction.php';
 require PATH_FW . PATH_MODULE . 'AutomaticallyModule.class.php';
 
 //启动自动化模块
-try
-{
-	Module\AutomaticallyModule::start();
+Module\AutomaticallyModule::start();
 
-	//如果是首次部署项目，则在所有的项目下面新建空白的安全文件
-	if (FIRST_DEPLOYMENT)
-		Module\FileModule::createSecurityIndex();
-}
-catch(Module\ExceptionModule $e)
-{
-	$e -> printError();
-}
-catch(\Exception $e)
-{
-	if (DEBUG)
-		print_r($e -> getMessage());
-	exit ;
-}
+//如果是首次部署项目，则在所有的项目下面新建空白的安全文件
+if (FIRST_DEPLOYMENT)
+	Module\FileModule::createSecurityIndex();
 ?>

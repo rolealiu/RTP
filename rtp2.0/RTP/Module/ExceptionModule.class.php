@@ -48,7 +48,7 @@ class ExceptionModule
 			//文件系统异常
 			case 13 :
 			{
-				return new Exception\FileException($code, $info);
+				return new FileException($code, $info);
 				break;
 			}
 			//数据异常
@@ -60,10 +60,65 @@ class ExceptionModule
 
 			default :
 			{
-				return new Exception($info, $code);
 				break;
 			}
 		}
+		return;
+	}
+
+}
+
+class FileException extends \Exception
+{
+	private $errorInfo;
+	private $errorCode;
+
+	/**
+	 * 构造方法，传递错误信息以及错误码
+	 */
+	public function __construct($code,$info)
+	{
+		echo 123;
+		$this -> info = $code;
+		$this -> code = $code;
+	}
+
+	/**
+	 * 输出错误信息
+	 */
+	public function printError($isStop = FALSE)
+	{
+		echo 'ok';
+		//如果非调试模式，则取消所有的错误输出
+		if (!DEBUG)
+		{
+			$infoJson = array('errorCode' => $this -> errorCode, );
+
+			//输出json
+			echo json_encode($infoJson);
+		}
+		else
+		{
+			$infoJson = array(
+				'datetime' => date('Y/M/d H:i:s', time()),
+				'errorCode' => $this -> errorCode,
+				'info' => $this -> errorInfo,
+				'wrongFile' => $this -> getFile(),
+				'wrongLine' => $this -> getLine()
+			);
+
+			//输出自然语言
+			printFormatted($infoJson);
+
+			$logInfo = "{$infoJson['datetime']}=>[code:{$infoJson['errorCode']};info:{$infoJson['info']};wrongFile:{$infoJson['wrongFile']};wrongLine:{$infoJson['wrongLine']}];\n";
+
+			//文件内容追加
+			file_put_contents('./log/' . date('Y_M_d', time()) . '.txt', $logInfo, FILE_APPEND);
+		}
+
+		if ($isStop)
+			exit ;
+
 	}
 
 }

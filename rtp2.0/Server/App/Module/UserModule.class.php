@@ -30,8 +30,8 @@ class UserModule
 		//		//通知观察者，并且传递参数
 		//		$this -> notifyObserver('login', 'UserModule\'s login function work!');
 
-//		$dao = getDatabase();
-new RTP\Module\ExceptionModule(13001,13);
+		//		$dao = getDatabase();
+		echo 'user logical';
 	}
 
 }

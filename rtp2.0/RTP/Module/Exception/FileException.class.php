@@ -7,12 +7,16 @@
 namespace RTP\Module\Exception;
 class FileException extends \Exception
 {
+	private $errorInfo;
+	private $errorCode;
 
 	/**
 	 * 构造方法，传递错误信息以及错误码
 	 */
 	public function __construct($info, $code)
 	{
+		$this -> info = $code;
+		$this -> code = $code;
 	}
 
 	/**
@@ -20,7 +24,7 @@ class FileException extends \Exception
 	 */
 	public function printError($isStop = FALSE)
 	{
-		echo 123;
+		echo 'ok';
 		//如果非调试模式，则取消所有的错误输出
 		if (!DEBUG)
 		{
