@@ -2,7 +2,7 @@
 /**
  * 数据库模块，用于数据库创建以及一系列数据库操作
  * @author rolealiu/刘昊臻,www.rolealiu.com
- * @updateTime 20160301
+ * @updateTime 20160308
  */
 
 namespace RTP\Module;
@@ -118,7 +118,7 @@ class DatabaseModule
 	/**
 	 * prepare方式执行操作，返回一条数据，防止sql注入
 	 */
-	public function p_execute($sql, $params = null)
+	public function prepareExecute($sql, $params = null)
 	{
 		$this -> last_sql = $sql;
 		$this -> db_history = self::$db_con -> prepare($sql);
@@ -140,7 +140,7 @@ class DatabaseModule
 	/**
 	 * prepare方式执行操作，返回多条数据（如果可能），防止sql注入
 	 */
-	public function p_executeAll($sql, $params = null)
+	public function prepareExecuteAll($sql, $params = null)
 	{
 		$this -> last_sql = $sql;
 		$this -> db_history = self::$db_con -> prepare($sql);
@@ -162,7 +162,7 @@ class DatabaseModule
 	/**
 	 * prepare方式，以新的参数重新执行一次查询，返回一条数据
 	 */
-	public function p_rexecute($params)
+	public function prepareRexecute($params)
 	{
 		$this -> db_history -> execute($params);
 		$this -> getError();
@@ -173,7 +173,7 @@ class DatabaseModule
 	/**
 	 * prepare方式，以新的参数重新执行一次查询，返回多条数据（如果可能）
 	 */
-	public function p_rexecuteAll($params)
+	public function prepareRexecuteAll($params)
 	{
 		$this -> db_history -> execute($params);
 		$this -> getError();
@@ -223,6 +223,30 @@ class DatabaseModule
 				throw new ExceptionModule(12000, "database error in:{self::$db_con -> errorInfo()}");
 		}
 	}
+	
+	/**
+	 * 开始事务
+	 */
+	 public function beginTransaction()
+	 {
+	 	self::$db_con->beginTransaction();
+	 }
+	 
+	 /**
+	  * 回滚事务
+	  */
+	 public function rollback()
+	 {
+	 	self::$db_con->rollback();
+	 }
+	 
+	 /**
+	  * 提交事务
+	  */
+	 public function commit()
+	 {
+	 	self::$db_con->commit();
+	 }
 
 }
 ?>

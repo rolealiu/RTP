@@ -39,7 +39,7 @@ function quickFlush()
 /**
  * 快捷输入函数
  */
-function getInput()
+function quickInput()
 {
 	if (func_num_args() == 0)
 	{
@@ -94,7 +94,7 @@ function getInput()
 	if (func_num_args() == 1)
 	{
 		$paramName = func_get_arg(0);
-		switch ($at)
+		switch (strtolower(AT))
 		{
 			case 'auto' :
 			{
@@ -123,7 +123,7 @@ function getInput()
 	else
 	{
 		$args = func_get_args();
-		switch ($at)
+		switch (strtolower(AT))
 		{
 			case 'auto' :
 			{
