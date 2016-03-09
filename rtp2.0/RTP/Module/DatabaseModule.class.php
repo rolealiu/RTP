@@ -99,7 +99,7 @@ class DatabaseModule
 		$this -> last_sql = $sql;
 		$this -> db_history = self::$db_con -> query($sql);
 		$this -> getError();
-		$this -> last_result = $this -> db_history -> fetch();
+		$this -> last_result = $this -> db_history -> fetch(\PDO::FETCH_ASSOC);
 		return $this -> last_result;
 	}
 
@@ -132,7 +132,7 @@ class DatabaseModule
 			$this -> db_history -> execute($params);
 		}
 		$this -> getError();
-		$this -> last_result = $this -> db_history -> fetch();
+		$this -> last_result = $this -> db_history -> fetch(\PDO::FETCH_ASSOC);
 
 		return $this -> last_result;
 	}
@@ -166,7 +166,7 @@ class DatabaseModule
 	{
 		$this -> db_history -> execute($params);
 		$this -> getError();
-		$this -> last_result = $this -> db_history -> fetch();
+		$this -> last_result = $this -> db_history -> fetch(\PDO::FETCH_ASSOC);
 		return $this -> last_result;
 	}
 
