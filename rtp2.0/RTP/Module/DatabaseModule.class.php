@@ -220,33 +220,36 @@ class DatabaseModule
 		if (DEBUG)
 		{
 			if (self::$db_con -> errorInfo()[0] != 00000)
-				throw new ExceptionModule(12000, "database error in:{self::$db_con -> errorInfo()}");
+			{
+				$errorInfo = json_encode(self::$db_con -> errorInfo());
+				throw new ExceptionModule(12000, "database error in:{$errorInfo}");
+			}
 		}
 	}
-	
+
 	/**
 	 * 开始事务
 	 */
-	 public function beginTransaction()
-	 {
-	 	self::$db_con->beginTransaction();
-	 }
-	 
-	 /**
-	  * 回滚事务
-	  */
-	 public function rollback()
-	 {
-	 	self::$db_con->rollback();
-	 }
-	 
-	 /**
-	  * 提交事务
-	  */
-	 public function commit()
-	 {
-	 	self::$db_con->commit();
-	 }
+	public function beginTransaction()
+	{
+		self::$db_con -> beginTransaction();
+	}
+
+	/**
+	 * 回滚事务
+	 */
+	public function rollback()
+	{
+		self::$db_con -> rollback();
+	}
+
+	/**
+	 * 提交事务
+	 */
+	public function commit()
+	{
+		self::$db_con -> commit();
+	}
 
 }
 ?>
