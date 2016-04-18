@@ -16,8 +16,14 @@ class UserDao
 	{
 	}
 
-	public function login()
+	public function login(&$testParam)
 	{
+		//这里存放数据库的操作
+		//使用单例模式获取数据库实例
+		//$db = getDatabase();
+		//执行一条简单的操作，并且返回结果。有很多种数据库操作方法，可以看一下框架的Module里面的DatabaseModule
+		//$result = $db->execute();
+		return $testParam;
 	}
 
 }

@@ -4,7 +4,7 @@
  * 此文件为统一入口，所有的请求将发送到此入口，并且由框架的路由机制进行分发
  * 详细的参数请参看框架起始文件
  * @author rolealiu/刘昊臻
- * @version 2.0 beta2
+ * @version 2.0 beta3
  * @updateDate 20151211
  */
 

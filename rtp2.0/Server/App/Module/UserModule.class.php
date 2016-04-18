@@ -17,7 +17,7 @@ class UserModule
 
 	}
 
-	public function login()
+	public function login(&$testParam)
 	{
 		//		//新建两个观察者
 		//		$ob1 = new identityObserver;
@@ -31,6 +31,9 @@ class UserModule
 		//		$this -> notifyObserver('login', 'UserModule\'s login function work!');
 
 		//		$dao = getDatabase();
+		
+		$dao = new UserDao;
+		return $dao->login($testParam);
 	}
 
 }

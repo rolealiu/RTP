@@ -19,7 +19,7 @@ function getDatabase($isNewInstance = false)
 
 /**
  * 快捷完成请求函数，用于一次性按顺序返回所有信息，无须担心Cookie放置位置。
- * 注意，需要配合P()函数使用
+ * 注意，需要配合序列化输出serialPrint()函数使用
  */
 function quickFlush()
 {
