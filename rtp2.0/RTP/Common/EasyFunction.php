@@ -19,7 +19,7 @@ function getDatabase($isNewInstance = false)
 
 /**
  * 快捷完成请求函数，用于一次性按顺序返回所有信息，无须担心Cookie放置位置。
- * 注意，需要配合序列化输出serialPrint()函数使用
+ * 注意，需要配合P()函数使用
  */
 function quickFlush()
 {
@@ -39,7 +39,31 @@ function quickFlush()
 /**
  * 快捷输入函数
  */
-function quickInput()
+function quickInput($paramName)
+{
+	switch (strtolower(AT))
+	{
+		case 'auto' :
+		{
+			return empty($_GET[$paramName]) ? $_POST[$paramName] : $_GET[$paramName];
+		}
+		case 'post' :
+		{
+			return $_POST[$paramName];
+		}
+		case 'get' :
+		{
+			return $_GET[$paramName];
+		}
+		default :
+			return null;
+	}
+}
+
+/**
+ * 安全输入函数,获取参数并且对参数进行过滤
+ */
+function securelyInput()
 {
 	if (func_num_args() == 0)
 	{
@@ -177,6 +201,14 @@ function quickOutput($output)
 }
 
 /**
+ * 结束输出函数:output,默认数组输出json,字符串直接输出，并且输出之后停止程序
+ */
+function exitOutput($output)
+{
+	exit(is_array($output) ? json_encode($output) : $output);
+}
+
+/**
  * 快捷序列化输出函数，需要配合quickFlush()函数使用
  */
 function serialPrint($output, $distinct = FALSE)
@@ -214,7 +246,7 @@ function quickRequire($filePath)
 /**
  * 快捷Session操作函数:session
  */
-function quickSession($key, &$value)
+function quickSession(&$key, &$value)
 {
 	if (session_status() == 1)
 		session_start();

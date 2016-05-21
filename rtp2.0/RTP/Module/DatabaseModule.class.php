@@ -2,7 +2,7 @@
 /**
  * 数据库模块，用于数据库创建以及一系列数据库操作
  * @author rolealiu/刘昊臻,www.rolealiu.com
- * @updateTime 20160308
+ * @updateTime 20160307
  */
 
 namespace RTP\Module;
@@ -65,8 +65,8 @@ class DatabaseModule
 		}
 		catch(\PDOException $e)
 		{
-			//输出错误信息
-			print_r($e -> getMessage());
+			if(DEBUG)
+				print_r($e -> getMessage());
 			exit ;
 		}
 	}
@@ -221,35 +221,35 @@ class DatabaseModule
 		{
 			if (self::$db_con -> errorInfo()[0] != 00000)
 			{
-				$errorInfo = json_encode(self::$db_con -> errorInfo());
-				throw new ExceptionModule(12000, "database error in:{$errorInfo}");
+				$error = json_encode(self::$db_con -> errorInfo());
+				throw new ExceptionModule(12000, "database error in:$error");
 			}
 		}
 	}
-
+	
 	/**
 	 * 开始事务
 	 */
-	public function beginTransaction()
-	{
-		self::$db_con -> beginTransaction();
-	}
-
-	/**
-	 * 回滚事务
-	 */
-	public function rollback()
-	{
-		self::$db_con -> rollback();
-	}
-
-	/**
-	 * 提交事务
-	 */
-	public function commit()
-	{
-		self::$db_con -> commit();
-	}
+	 public function beginTransaction()
+	 {
+	 	self::$db_con->beginTransaction();
+	 }
+	 
+	 /**
+	  * 回滚事务
+	  */
+	 public function rollback()
+	 {
+	 	self::$db_con->rollback();
+	 }
+	 
+	 /**
+	  * 提交事务
+	  */
+	 public function commit()
+	 {
+	 	self::$db_con->commit();
+	 }
 
 }
 ?>

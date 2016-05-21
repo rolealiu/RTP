@@ -26,6 +26,7 @@ class FileModule
 
 		foreach ($dirs as $dir)
 		{
+			echo $dir.'</br>';
 			if (file_exists($dir . '/index.html') || file_exists($dir . '/index.php'))
 				continue;
 			else
