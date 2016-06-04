@@ -45,9 +45,9 @@ function quickInput($paramName, $defaultValue = NULL)
 	{
 		case 'auto' :
 		{
-			if (is_null($_GET[$paramName]))
+			if (is_null($_GET[$paramName]) || $_GET[$paramName] == '')
 			{
-				if (is_null($_POST[$paramName]))
+				if (is_null($_POST[$paramName] || $_POST[$paramName] == ''))
 					return $defaultValue;
 				else
 					return $_POST[$paramName];
@@ -57,14 +57,14 @@ function quickInput($paramName, $defaultValue = NULL)
 		}
 		case 'post' :
 		{
-			if (is_null($_POST[$paramName]))
+			if (is_null($_POST[$paramName]) || $_POST[$paramName] == '')
 				return $defaultValue;
 			else
 				return $_POST[$paramName];
 		}
 		case 'get' :
 		{
-			if (is_null($_GET[$paramName]))
+			if (is_null($_GET[$paramName]) || $_GET[$paramName] == '')
 				return $defaultValue;
 			else
 				return $_GET[$paramName];
@@ -83,9 +83,9 @@ function securelyInput($paramName, $defaultValue = NULL)
 	{
 		case 'auto' :
 		{
-			if (is_null($_GET[$paramName]))
+			if (is_null($_GET[$paramName]) || $_GET[$paramName] == '')
 			{
-				if (is_null($_POST[$paramName]))
+				if (is_null($_POST[$paramName]) || $_POST[$paramName] == '')
 					return $defaultValue;
 				else
 					return cleanFormat($_POST[$paramName]);
@@ -95,14 +95,14 @@ function securelyInput($paramName, $defaultValue = NULL)
 		}
 		case 'post' :
 		{
-			if (is_null($_POST[$paramName]))
+			if (is_null($_POST[$paramName]) || $_POST[$paramName] == '')
 				return $defaultValue;
 			else
 				return cleanFormat($_POST[$paramName]);
 		}
 		case 'get' :
 		{
-			if (is_null($_GET[$paramName]))
+			if (is_null($_GET[$paramName]) || $_GET[$paramName] == '')
 				return $defaultValue;
 			else
 				return cleanFormat($_GET[$paramName]);
