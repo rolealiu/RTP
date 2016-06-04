@@ -81,14 +81,14 @@ class DatabaseModule
 	}
 
 	/**
-	 * 执行无返回值的数据库操作
+	 * 执行无返回值的数据库操作并且返回受影响的记录条数
 	 */
 	public function execute($sql)
 	{
 		$this -> last_sql = $sql;
-		$this -> db_history = self::$db_con -> exec($sql);
+		$result = self::$db_con -> exec($sql);
 		$this -> getError();
-		return $this -> db_history;
+		return $result;
 	}
 
 	/**

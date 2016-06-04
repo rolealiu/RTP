@@ -2,7 +2,7 @@
 /**
  * 快速开发函数库
  * @author rolealiu/刘昊臻,www.rolealiu.com
- * @updateDate 20160227
+ * @updateDate 20160604
  */
 
 use RTP\Module as M;
@@ -39,156 +39,76 @@ function quickFlush()
 /**
  * 快捷输入函数
  */
-function quickInput($paramName)
+function quickInput($paramName, $defaultValue = NULL)
 {
 	switch (strtolower(AT))
 	{
 		case 'auto' :
 		{
-			return empty($_GET[$paramName]) ? $_POST[$paramName] : $_GET[$paramName];
+			if (is_null($_GET[$paramName]))
+			{
+				if (is_null($_POST[$paramName]))
+					return $defaultValue;
+				else
+					return $_POST[$paramName];
+			}
+			else
+				return $_GET[$paramName];
 		}
 		case 'post' :
 		{
-			return $_POST[$paramName];
+			if (is_null($_POST[$paramName]))
+				return $defaultValue;
+			else
+				return $_POST[$paramName];
 		}
 		case 'get' :
 		{
-			return $_GET[$paramName];
+			if (is_null($_GET[$paramName]))
+				return $defaultValue;
+			else
+				return $_GET[$paramName];
 		}
 		default :
-			return null;
+			return NULL;
 	}
 }
 
 /**
  * 安全输入函数,获取参数并且对参数进行过滤
  */
-function securelyInput()
+function securelyInput($paramName, $defaultValue = NULL)
 {
-	if (func_num_args() == 0)
+	switch (strtolower(AT))
 	{
-		//判断请求方式
-		switch (strtolower(AT))
+		case 'auto' :
 		{
-			case 'auto' :
+			if (is_null($_GET[$paramName]))
 			{
-				if (!empty($_GET))
-				{
-					foreach ($_GET as $key => $value)
-					{
-						$input[$key] = cleanFormat($value);
-					}
-					break;
-				}
+				if (is_null($_POST[$paramName]))
+					return $defaultValue;
 				else
-				if (!empty($_POST))
-				{
-					foreach ($_POST as $key => $value)
-					{
-						$input[$key] = cleanFormat($value);
-					}
-					break;
-				}
-				break;
-			}
-			case 'post' :
-			{
-				foreach ($_POST as $key => $value)
-				{
-					$input[$key] = cleanFormat($value);
-				}
-				break;
-			}
-			case 'get' :
-			{
-				foreach ($_GET as $key => $value)
-				{
-					$input[$key] = cleanFormat($value);
-				}
-				break;
-			}
-			default :
-				return NULL;
-		}
-		unset($key);
-		unset($value);
-		return $input;
-	}
-	else
-	if (func_num_args() == 1)
-	{
-		$paramName = func_get_arg(0);
-		switch (strtolower(AT))
-		{
-			case 'auto' :
-			{
-				if (!empty($_GET))
-				{
-					return cleanFormat($_GET[$paramName]);
-				}
-				else
-				if (!empty($_POST))
-				{
 					return cleanFormat($_POST[$paramName]);
-				}
 			}
-			case 'post' :
-			{
-				return cleanFormat($_POST[$paramName]);
-			}
-			case 'get' :
-			{
+			else
 				return cleanFormat($_GET[$paramName]);
-			}
-			default :
-				return null;
 		}
-	}
-	else
-	{
-		$args = func_get_args();
-		switch (strtolower(AT))
+		case 'post' :
 		{
-			case 'auto' :
-			{
-				if (!empty($_GET))
-				{
-					foreach ($args as &$paramName)
-					{
-						$input[$paramName] = cleanFormat($_GET[$paramName]);
-					}
-				}
-				else
-				if (!empty($_POST))
-				{
-					foreach ($args as &$paramName)
-					{
-						$input[$paramName] = cleanFormat($_POST[$paramName]);
-					}
-				}
-				break;
-			}
-			case 'post' :
-			{
-				foreach ($args as &$paramName)
-				{
-					$input[$paramName] = cleanFormat($_POST[$paramName]);
-				}
-				break;
-			}
-			case 'get' :
-			{
-				foreach ($args as &$paramName)
-				{
-					$input[$paramName] = cleanFormat($_GET[$paramName]);
-				}
-				break;
-			}
-			default :
-				return null;
+			if (is_null($_POST[$paramName]))
+				return $defaultValue;
+			else
+				return cleanFormat($_POST[$paramName]);
 		}
-		unset($paramName);
-		return $input;
+		case 'get' :
+		{
+			if (is_null($_GET[$paramName]))
+				return $defaultValue;
+			else
+				return cleanFormat($_GET[$paramName]);
+		}
+		default :
+			return NULL;
 	}
 }
 
