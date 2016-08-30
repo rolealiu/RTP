@@ -76,8 +76,8 @@ class DatabaseModule
 	 */
 	public function close()
 	{
-		self::$db_con = null;
-		self::$instance = null;
+		self::$db_con = NULL;
+		self::$instance = NULL;
 	}
 
 	/**
@@ -118,7 +118,7 @@ class DatabaseModule
 	/**
 	 * prepare方式执行操作，返回一条数据，防止sql注入
 	 */
-	public function prepareExecute($sql, $params = null)
+	public function prepareExecute($sql, $params = NULL)
 	{
 		$this -> last_sql = $sql;
 		$this -> db_history = self::$db_con -> prepare($sql);
@@ -140,7 +140,7 @@ class DatabaseModule
 	/**
 	 * prepare方式执行操作，返回多条数据（如果可能），防止sql注入
 	 */
-	public function prepareExecuteAll($sql, $params = null)
+	public function prepareExecuteAll($sql, $params = NULL)
 	{
 		$this -> last_sql = $sql;
 		$this -> db_history = self::$db_con -> prepare($sql);

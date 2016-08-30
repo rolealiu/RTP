@@ -2,8 +2,8 @@
 /**
  * 框架起始文件，入口文件引入此文件来启用框架
  * @author rolealiu/刘昊臻,www.rolealiu.com
- * @version 2.0 beta3
- * @updateDate 20160301
+ * @version 2.1 beta3
+ * @updateDate 20160719
  */
 
 namespace RTP;
@@ -38,6 +38,15 @@ defined('DB_NAME') or define('DB_NAME', 'rpt');
 
 //数据库是否需要保持长期连接（长连接）,多线程高并发环境下请开启,默认关闭
 defined('DB_PERSISTENT_CONNECTION') or define('DB_PERSISTENT_CONNECTION', FALSE);
+
+//Redis地址
+defined('REDIS_URL') or define('REDIS_URL', 'localhost');
+
+//Redis端口
+defined('REDIS_PORT') or define('REDIS_PORT', '6379');
+
+//Redis地址
+defined('REDIS_REQUIREPASS') or define('REDIS_REQUIREPASS', '');
 
 //框架模块目录名称
 defined('PATH_MODULE') or define('PATH_MODULE', '/Module/');

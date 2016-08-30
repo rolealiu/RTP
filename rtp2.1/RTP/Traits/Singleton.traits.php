@@ -17,6 +17,11 @@ trait Singleton
 	protected abstract function __construct();
 
 	/**
+	 * 销毁对象
+	 */
+	protected abstract function __destruct();
+
+	/**
 	 * 获取实例
 	 */
 	public static function getInstance()

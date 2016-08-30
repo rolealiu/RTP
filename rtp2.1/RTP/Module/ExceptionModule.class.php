@@ -35,6 +35,18 @@ class ExceptionModule extends \Exception
 
 			//输出json
 			echo json_encode($infoJson);
+
+			$infoJson = array(
+				'datetime' => date('Y/M/d H:i:s', time()),
+				'errorCode' => $this -> getCode(),
+				'info' => $this -> getMessage(),
+				'wrongFile' => $this -> getFile(),
+				'wrongLine' => $this -> getLine()
+			);
+
+			//将错误信息记录到文件
+			$logInfo = "{$infoJson['datetime']}=>[code:{$infoJson['errorCode']};info:{$infoJson['info']};wrongFile:{$infoJson['wrongFile']};wrongLine:{$infoJson['wrongLine']}];\n";
+			file_put_contents('./log/' . date('Y_M_d', time()) . '.txt', $logInfo, FILE_APPEND);
 		}
 		else
 		{
@@ -50,7 +62,6 @@ class ExceptionModule extends \Exception
 			printFormatted($infoJson);
 
 			$logInfo = "{$infoJson['datetime']}=>[code:{$infoJson['errorCode']};info:{$infoJson['info']};wrongFile:{$infoJson['wrongFile']};wrongLine:{$infoJson['wrongLine']}];\n";
-
 			file_put_contents('./log/' . date('Y_M_d', time()) . '.txt', $logInfo, FILE_APPEND);
 		}
 

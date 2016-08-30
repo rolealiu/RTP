@@ -4,8 +4,8 @@
  * 此文件为统一入口，所有的请求将发送到此入口，并且由框架的路由机制进行分发
  * 详细的参数请参看框架起始文件
  * @author rolealiu/刘昊臻
- * @version 2.0 beta3
- * @updateDate 20151211
+ * @version 2.1 beta1
+ * @updateDate 20160719
  */
 
 //是否初次部署，设定为TRUE将在所有用户自行创建的用户目录下新建空白的index.html文件防止部分服务器开启的目录查看功能，上线前设为false提高性能
