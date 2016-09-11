@@ -9,7 +9,7 @@
  */
 
 //是否初次部署，设定为TRUE将在所有用户自行创建的用户目录下新建空白的index.html文件防止部分服务器开启的目录查看功能，上线前设为false提高性能
-define('FIRST_DEPLOYMENT', TRUE);
+define('FIRST_DEPLOYMENT', FALSE);
 
 //定义请求方式(AJAX-Type)，GET/POST/AUTO,默认为POST
 define('AT', 'AUTO');
